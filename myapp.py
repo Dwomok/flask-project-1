@@ -1,15 +1,28 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
+import os
+import paho mqtt.client as mqtt
+
+client = mqtt.Client()
+client.connect('moorhouseassociates.com', 1883, 60)
+
 
 app = Flask(__name__)
 
 @app.route('/')
-
 def index():
 	return render_template("index.html")
 
 @app.route('/whereami')
 def whereami():
 	return "kdua"
+
+@app.route('/btn')
+def btn():
+	print('button clicked')
+	client.publish('test/all', 'yooo mhan')
+	return""
+
+
 
 @app.route("/linux")
 def linux():
